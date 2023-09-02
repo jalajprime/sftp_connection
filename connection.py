@@ -21,9 +21,9 @@ sftp_client = paramiko.SFTPClient.from_transport(sftp)
 # List remote files
 remote_files = sftp_client.listdir(sftp_remote_path)
 
+#Selecting the files with maximum date
 pattern = r'_([0-9]{8})\.txt'
 file_dates={}
-
 for filename in remote_files:
     match = re.search(pattern, filename)
     if match:
