@@ -3,7 +3,7 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 
 # SFTP configuration
-sftp_host = 'sftp://gfts.gilead.com'
+sftp_host = 'gfts.gilead.com'
 sftp_port = 22
 sftp_username = 'ext_gftzsgdprd_svc'
 sftp_password = 'ECn3#|7L^k#2'
