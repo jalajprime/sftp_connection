@@ -21,11 +21,24 @@ sftp_client = paramiko.SFTPClient.from_transport(sftp)
 # List remote files
 remote_files = sftp_client.listdir(sftp_remote_path)
 
+pattern = r'_([0-9]{8})\.txt'
+file_dates={}
+
+for filename in remote_files:
+    match = re.search(pattern, filename)
+    if match:
+        date = match.group(1)
+        file_dates[filename] = date
+
+max_date = max(file_dates.values())
+required_files = [filename for filename, date in file_dates.items() if date == max_date]
+
+
 # S3 setup
 s3_client = boto3.client('s3')
 
 # Copy files from SFTP to S3
-for remote_file in remote_files:
+for remote_file in required_files:
     remote_file_path = sftp_remote_path + remote_file
     s3_object_key = s3_prefix + remote_file
 
